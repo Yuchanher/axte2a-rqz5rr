@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Product } from './products';
 import { Injectable } from '@angular/core';
 
@@ -5,9 +6,12 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class CartService {
-  /* propriedade para armazenar a matriz dos produtos atuais no carrinho.*/
+  getShippingPrices() {
+    return this.http.get<{type: string, price: number}[]>('/assets/shipping.json');
+  }
   items: Product[] = [];
-  /* método anexa um produto a uma matriz deitems*/
+
+  constructor(private http: HttpClient) {}
   addToCart(product: Product) {
     this.items.push(product);
   }
